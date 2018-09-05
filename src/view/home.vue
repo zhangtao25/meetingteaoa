@@ -81,6 +81,8 @@
           this.$router.push({name:"file-manager"})
         }else if (key == "1-1"){
           this.$router.push({name:"list-of-goods"})
+        }else if (key == "2-2"){
+          this.$router.push({name:"add-goods"})
         }
       }
     }

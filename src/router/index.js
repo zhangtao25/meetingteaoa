@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from './../view/home'
-// import test from './../components/test'
-// import CommodityManagement from './../components/commodity-management'
 import FileManager from './../view/file-manager'
 import ListOfGoods from './../view/list-of-goods'
+import AddGoods from './../view/add-goods'
 
 Vue.use(Router)
 
@@ -28,6 +27,11 @@ export default new Router({
           path: 'list-of-goods',
           name: 'list-of-goods',
           component: ListOfGoods,
+        },
+        {
+          path: 'add-goods',
+          name: 'add-goods',
+          component: AddGoods,
         }
       ]
     }
