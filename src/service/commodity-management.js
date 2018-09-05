@@ -35,5 +35,5 @@ function getAllLargeclass(_this) {
 }
 
 export default {
-  getAllTypesOfTea
+  getAllLargeclass
 }
