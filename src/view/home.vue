@@ -23,7 +23,7 @@
           style="border-right: none;">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="iconfont icon-shujuguanli"></i>
               <span>数据管理</span>
             </template>
             <el-menu-item-group>
@@ -32,7 +32,7 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="iconfont icon-tianjiashuju"></i>
               <span>添加数据</span>
             </template>
             <el-menu-item-group>
@@ -41,15 +41,15 @@
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="3">
-            <i class="el-icon-document"></i>
+            <i class="iconfont icon-dingdan"></i>
             <span slot="title">订单管理</span>
           </el-menu-item>
           <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
+            <i class="iconfont icon-wenjianguanli"></i>
             <span slot="title">后台文件管理</span>
           </el-menu-item>
           <el-menu-item index="5">
-            <i class="el-icon-setting"></i>
+            <i class="iconfont icon-shezhi"></i>
             <span slot="title">修改资料</span>
           </el-menu-item>
         </el-menu>
