@@ -3,6 +3,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     mounted(){
       $(function() {
@@ -21,7 +22,24 @@
             // Callback when a file is double-clicked
             getFileCallback : function(file) {
               // ...
+
             },
+            handlers : {
+              select : function(event, elfinderInstance) {
+                console.log(event.data);
+                console.log(event.data.selected); // selected files hashes list
+                axios.get("http://localhost:8080/elfinder/php/connector.minimal.php",{params: {
+                    cmd : 'info',
+                    targets : event.data.selected
+                  }}).
+                then(res => {
+                  console.log(res)
+                })
+              },
+              getfile : function () {
+                console.log(34324532532)
+              }
+            }
           },
 
           // 2nd Arg - before boot up function
