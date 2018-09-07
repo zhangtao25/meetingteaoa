@@ -4,14 +4,21 @@ function getSmallclass(val) {
   return new Promise((resolve, reject) => {
     axios.get("/static/json/allTypesOfTea.json")
       .then(res => {
-        let obj = {'a':'红茶','b':'绿茶','c':'白茶','d':'黑茶','e':'乌龙茶','f':'花茶','g':'黄茶','h':'药茶','i':'茶具','j':'其它'}
+        let obj = {
+          'a':{name:'红茶',num:0}, 'b':{name:'绿茶',num:0},
+          'c':{name:'白茶',num:0},'d':{name:'黑茶',num:0},
+          'e':{name:'红乌龙',num:0},'f':{name:'花茶',num:0},
+          'g':{name:'黄茶',num:0},'h':{name:'药茶',num:0},
+          'i':{name:'茶具',num:0},'j':{name:'其它',num:0}
+        }
         let arr = []
         function PrefixZero(num, n) {
           return (Array(n).join(0) + num).slice(-n);
         }
         for (let i=0;i<res.data.length;i++){
-          if (res.data[i].largeclass==obj[val]) {
-            arr.push({"value": PrefixZero(i,3),"label": res.data[i].smallclass})
+          if (res.data[i].largeclass==obj[val]['name']) {
+            arr.push({"value": PrefixZero(obj[val]['num'],3),"label": res.data[i].smallclass})
+            obj[val]['num']++
           }
         }
         resolve(arr)

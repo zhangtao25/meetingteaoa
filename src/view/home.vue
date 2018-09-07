@@ -11,6 +11,10 @@
                   font-size: 25px;
                   line-height: 60px;
                   text-align: center">MeetingTea</p>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0 5px 0 20px">
+          <span style="color: #fff;line-height: 50px">meetingtea.top</span>
+          <div style="background-color: #4cc1b2;width: 5px;height: 25px"></div>
+        </div>
         <el-menu
           default-active="1"
           class="el-menu-vertical-demo"
@@ -23,34 +27,43 @@
           style="border-right: none;">
           <el-submenu index="1">
             <template slot="title">
-              <i class="iconfont icon-shujuguanli"></i>
-              <span>数据管理</span>
+              <!--<i class="iconfont icon-shujuguanli"></i>-->
+              <span class="iconfont icon-shujuguanli">数据管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">商品列表</el-menu-item>
+              <el-menu-item index="1-1">
+                <!--<i class="iconfont icon-shangpinliebiao"></i>-->
+                <span class="iconfont icon-shangpinliebiao">商品列表</span>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
-              <i class="iconfont icon-tianjiashuju"></i>
-              <span>添加数据</span>
+              <!--<i class="iconfont icon-tianjiashuju"></i>-->
+              <span class="iconfont icon-tianjiashuju">添加数据</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">添加用户</el-menu-item>
-              <el-menu-item index="2-2">添加商品</el-menu-item>
+              <el-menu-item index="2-1">
+                <!--<i class="iconfont icon-tianjiayonghu"></i>-->
+                <span class="iconfont icon-tianjiayonghu">添加用户</span>
+              </el-menu-item>
+              <el-menu-item index="2-2">
+                <!--<i class="iconfont icon-tianjiashangpin"></i>-->
+                <span class="iconfont icon-tianjiashangpin">添加商品</span>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="3">
-            <i class="iconfont icon-dingdan"></i>
-            <span slot="title">订单管理</span>
+            <!--<i class="iconfont icon-dingdan"></i>-->
+            <span slot="title" class="iconfont icon-dingdan">订单管理</span>
           </el-menu-item>
           <el-menu-item index="4">
-            <i class="iconfont icon-wenjianguanli"></i>
-            <span slot="title">后台文件管理</span>
+            <!--<i class="iconfont icon-wenjianguanli"></i>-->
+            <span slot="title" class="iconfont icon-wenjianguanli">后台文件管理</span>
           </el-menu-item>
           <el-menu-item index="5">
-            <i class="iconfont icon-shezhi"></i>
-            <span slot="title">修改资料</span>
+            <!--<i class="iconfont icon-shezhi"></i>-->
+            <span slot="title" class="iconfont icon-shezhi">修改资料</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
