@@ -27,3 +27,10 @@
   .icon-tianjiayonghu:before{content: "\e608";}
   .icon-tianjiashangpin:before{content: "\e60a";}
 </style>
+<script>
+  export default {
+    mounted(){
+      // console.log(this.process,'xsaxsaca')
+    }
+  }
+</script>

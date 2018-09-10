@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-function AddGoods(val) {
+function AddGoods(val,url) {
   return new Promise((resolve, reject) => {
 
-    axios.get("http://localhost:3030/addGoods",{params:val})
+    axios.get(url + ":3030/addGoods",{params:val})
       .then(res => {
         if (res.data == 'ok'){
           resolve('ok')
@@ -17,11 +17,10 @@ function AddGoods(val) {
   });
 }
 
-function GetGoods(val) {
+function GetGoods(url) {
   return new Promise((resolve, reject) => {
-    axios.get("http://localhost:3030/getGoods")
+    axios.get(url + ":3030/getGoods")
       .then(res => {
-        // console.log(res.data)
         resolve(res.data)
       })
       .catch(err=>{

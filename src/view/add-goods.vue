@@ -93,7 +93,7 @@
           zh_title: '西湖龙井',
           zh_desc: '买茶叶送老婆',
           en_title: 'Longjin',
-          en_desc: 'very haohe',
+          en_desc: 'Buy tea and send your wife',
           saleoff: {
             saleoff_type:'2',
             saleoff_value:{
@@ -103,10 +103,20 @@
           },
           price: '90',
           no_discount_price: '100',
-          figure_img: 'http://localhost:8080/elfinder/files/image-test/masichun0.jpg'
+          figure_img: this.dataInterface + ':8080/elfinder/files/image-test/masichun0.jpg'
         },
         rules: {
-          classification: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+          classification: [
+            { required: true, message: '请输入活动名称', trigger: 'blur' },
+            {
+              validator: (rule, value, callback) => {
+                if (value.smallclass == ""){
+                  callback(new Error("请商品选择分类"));
+                }else {
+                  callback();
+                }
+              }
+            }],
           zh_title: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
           zh_desc: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
           zh_saleoff: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
@@ -127,9 +137,11 @@
         this.largeclassOptions = AllTypesOfTea.getLargeclass()
       },
       submitForm(formName) {
+        let _this = this
+        console.log(_this.dataInterface)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            GoodsDbOperation.AddGoods(this.ruleForm).then(res => {
+            GoodsDbOperation.AddGoods(this.ruleForm,_this.dataInterface).then(res => {
               if (res == 'ok'){
                 this.$message({
                   message: '商品已入库',
@@ -150,9 +162,11 @@
       },
       handleChange(val){
         let _this = this
+
         AllTypesOfTea.getSmallclass(val)
           .then(res=>{
             _this.smallclassOptions = res
+            _this.ruleForm.classification.smallclass = ""
           })
       },
       selectImageChange(val){

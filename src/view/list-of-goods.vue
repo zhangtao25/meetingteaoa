@@ -10,7 +10,7 @@
               <span>{{ props.row._id }}</span>
             </el-form-item>
             <el-form-item label="商品分类">
-              <span>{{handleClassification(JSON.parse(props.row.classification))}}</span>
+              <span>{{shangpinfenlei}}</span>
             </el-form-item>
             <el-form-item label="中文名称">
               <span>{{ props.row.zh_title }}</span>
@@ -85,15 +85,16 @@
     data() {
       return {
         goodsData:[],
+        shangpinfenlei:""
       }
     },
     mounted(){
       this.init();
-
     },
     methods:{
       init(){
-        GoodsDbOperation.GetGoods().then(res => {
+        let _this = this
+        GoodsDbOperation.GetGoods(_this.dataInterface).then(res => {
           this.goodsData = res
         })
       },
@@ -101,33 +102,29 @@
         if (val.saleoff_type==1){
           return '立减'+ val.saleoff_value['1'] +'元'
         }else if (val.saleoff_type==2) {
-          return '满减'+ val.saleoff_value['2'] +'元'
+          return '享'+ val.saleoff_value['2'] +'折'
         }else {
           return '新品'
         }
       },
       handleClassification(val){
-        let xxx = 'a'
+        let _this = this
         AllTypesOfTea.getSmallclass(val.largeclass).then(res=>{
           for(let i=0;i<res.length;i++){
             if (val.smallclass == res[i].value){
-              console.log(val.smallclass,res[i].value)
-              xxx = res[i]
-              // return
+              console.log(res[i].label)
+              let largeclass = AllTypesOfTea.getLargeclass()
+              for(let j=0;j<largeclass.length;j++){
+                if (largeclass[j].value == val.largeclass){
+                  console.log(largeclass[j].label)
+                  // resolve("111111111111111")
+                  // re\\\\
+                  _this.shangpinfenlei =largeclass[j].label+res[i].label
+                }
+              }
             }
           }
         })
-
-        setTimeout(()=>{
-          return xxx
-        },1000)
-
-
-        // for(let i=0;i<AllTypesOfTea.getLargeclass().length;i++){
-        //   if (val.largeclass == AllTypesOfTea.getLargeclass()[i].value){
-        //     return AllTypesOfTea.getLargeclass()[i].label
-        //   }
-        // }
       }
     }
   }

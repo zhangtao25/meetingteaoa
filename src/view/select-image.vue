@@ -52,7 +52,7 @@
             {
               cssAutoLoad : false,
               baseUrl : './',
-              url : 'http://localhost:8080/elfinder/php/connector.minimal.php',
+              url : _this.dataInterface+':8080/elfinder/php/connector.minimal.php',
               getFileCallback : function(file) {},
               handlers : {
                 select : function(event, elfinderInstance) {
@@ -102,14 +102,14 @@
       getImageUrl(){
         let _this = this
         _this.fullscreenLoading = true;
-        axios.get("http://localhost:8080/elfinder/php/connector.minimal.php",{params: {
+        axios.get(_this.dataInterface+":8080/elfinder/php/connector.minimal.php",{params: {
             cmd : 'info',
             targets : _this.currentlySelectedFiles
           }}).
         then(res => {
           console.log(res)
           _this.fullscreenLoading = false;
-          _this.selectImageUrl = 'http://localhost:8080/elfinder/' + res.data.files[0].path.replace(/\\/g, '/')
+          _this.selectImageUrl = _this.dataInterface+':8080/elfinder/' + res.data.files[0].path.replace(/\\/g, '/')
 
         })
       },

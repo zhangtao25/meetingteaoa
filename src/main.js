@@ -9,6 +9,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
+// console.log(process.env.API_ROOT)
+Vue.prototype.dataInterface = process.env.API_ROOT
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

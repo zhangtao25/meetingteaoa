@@ -6,29 +6,19 @@
   import axios from 'axios'
   export default {
     mounted(){
+      let _this = this;
       $(function() {
         $('#elfinder').elfinder(
-          // 1st Arg - options
           {
-            // Disable CSS auto loading
             cssAutoLoad : false,
-
-            // Base URL to css/*, js/*
             baseUrl : './',
-
-            // Connector URL
-            url : 'http://localhost:8080/elfinder/php/connector.minimal.php',
-
-            // Callback when a file is double-clicked
-            getFileCallback : function(file) {
-              // ...
-
-            },
+            url : _this.dataInterface + ':8080/elfinder/php/connector.minimal.php',
+            getFileCallback : function(file) {},
             handlers : {
               select : function(event, elfinderInstance) {
                 console.log(event.data);
                 console.log(event.data.selected); // selected files hashes list
-                axios.get("http://localhost:8080/elfinder/php/connector.minimal.php",{params: {
+                axios.get(_this.dataInterface + ":8080/elfinder/php/connector.minimal.php",{params: {
                     cmd : 'info',
                     targets : event.data.selected
                   }}).
@@ -41,12 +31,8 @@
               }
             }
           },
-
-          // 2nd Arg - before boot up function
           function(fm, extraObj) {
-            // `init` event callback function
             fm.bind('init', function() {
-              // Optional for Japanese decoder "extras/encoding-japanese.min"
               delete fm.options.rawStringDecoder;
               if (fm.lang === 'ja') {
                 fm.loadScript(
@@ -62,8 +48,6 @@
                 );
               }
             });
-
-            // Optional for set document.title dynamically.
             var title = document.title;
             fm.bind('open', function() {
               var path = '',
@@ -78,8 +62,6 @@
           }
         );
       });
-
-      // console.log($)
     }
   }
 </script>
