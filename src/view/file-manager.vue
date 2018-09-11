@@ -16,18 +16,12 @@
             getFileCallback : function(file) {},
             handlers : {
               select : function(event, elfinderInstance) {
-                console.log(event.data);
-                console.log(event.data.selected); // selected files hashes list
                 axios.get(_this.dataInterface + ":8080/elfinder/php/connector.minimal.php",{params: {
                     cmd : 'info',
                     targets : event.data.selected
-                  }}).
-                then(res => {
-                  console.log(res)
-                })
+                  }})
               },
               getfile : function () {
-                console.log(34324532532)
               }
             }
           },

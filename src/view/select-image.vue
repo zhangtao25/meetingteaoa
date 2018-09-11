@@ -107,7 +107,7 @@
             targets : _this.currentlySelectedFiles
           }}).
         then(res => {
-          console.log(res)
+          // console.log(res)
           _this.fullscreenLoading = false;
           _this.selectImageUrl = _this.dataInterface+':8080/elfinder/' + res.data.files[0].path.replace(/\\/g, '/')
 

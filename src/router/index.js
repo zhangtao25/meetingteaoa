@@ -4,6 +4,7 @@ import home from './../view/home'
 import FileManager from './../view/file-manager'
 import ListOfGoods from './../view/list-of-goods'
 import AddGoods from './../view/add-goods'
+import login from './../view/login'
 
 Vue.use(Router)
 
@@ -11,7 +12,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: "/home"
+      redirect: "/login"
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login},
+    {
+      path: '/home',
+      redirect:'/home/add-goods'
     },
     {
       path: '/home',
@@ -35,5 +44,6 @@ export default new Router({
         }
       ]
     }
-  ]
+  ],
+  mode: 'history',
 })

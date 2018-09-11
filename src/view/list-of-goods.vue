@@ -10,7 +10,7 @@
               <span>{{ props.row._id }}</span>
             </el-form-item>
             <el-form-item label="商品分类">
-              <span>{{shangpinfenlei}}</span>
+              <span>{{ handleClassification(props.row.classification) }}{{classificationContainer}}</span>
             </el-form-item>
             <el-form-item label="中文名称">
               <span>{{ props.row.zh_title }}</span>
@@ -28,7 +28,6 @@
               <span>{{handleSaleoff(JSON.parse(props.row.saleoff))}}</span>
             </el-form-item>
             <el-form-item label="商品图片">
-              <!--<span>{{JSON.parse(props.row.saleoff).saleoff_type}}</span>-->
               <span>{{props.row.figure_img}}</span>
               <img width="300" :src="props.row.figure_img" alt="">
             </el-form-item>
@@ -55,10 +54,11 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)" v-loading.fullscreen.lock="fullscreenLoading">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <edit-goods ref="editGoods"></edit-goods>
   </div>
 </template>
 
@@ -80,12 +80,17 @@
 <script>
   import GoodsDbOperation from './../service/goods-db-operation'
   import AllTypesOfTea from './../service/all-types-of-tea'
-  // import xxx from './../service/all-types-of-tea'
+  import EditGoods from './../view/edit-goods'
+
   export default {
+    components:{
+      'edit-goods': EditGoods
+    },
     data() {
       return {
         goodsData:[],
-        shangpinfenlei:""
+        classificationContainer:"",
+        fullscreenLoading:false
       }
     },
     mounted(){
@@ -108,24 +113,38 @@
         }
       },
       handleClassification(val){
-        let _this = this
-        AllTypesOfTea.getSmallclass(val.largeclass).then(res=>{
-          for(let i=0;i<res.length;i++){
-            if (val.smallclass == res[i].value){
-              console.log(res[i].label)
-              let largeclass = AllTypesOfTea.getLargeclass()
-              for(let j=0;j<largeclass.length;j++){
-                if (largeclass[j].value == val.largeclass){
-                  console.log(largeclass[j].label)
-                  // resolve("111111111111111")
-                  // re\\\\
-                  _this.shangpinfenlei =largeclass[j].label+res[i].label
-                }
-              }
+        val = JSON.parse(val)
+        let obj = {"largeclass":"","smallclass":""}
+        let largeclassArr = AllTypesOfTea.getLargeclass()
+        for(let i=0;i<largeclassArr.length;i++){
+          if (val.largeclass == largeclassArr[i].value){
+            obj.largeclass=largeclassArr[i].label
+          }
+        }
+        AllTypesOfTea.getSmallclass(val.largeclass).then(res => {
+          let smallclassArr = res
+          for(let i=0;i<smallclassArr.length;i++){
+            if (val.smallclass == smallclassArr[i].value){
+              obj.smallclass=smallclassArr[i].label
+              this.classificationContainer = obj.largeclass+obj.smallclass
             }
           }
         })
+      },
+      handleDelete(index,row){
+        let _this = this
+        _this.fullscreenLoading = true;
+        GoodsDbOperation.DelGoods(row._id,_this.dataInterface).then(res => {
+          if (res == "ok"){
+            _this.init();
+            _this.fullscreenLoading = false;
+          }
+        })
+      },
+      handleEdit(index,row){
+        // console.log(row)
+        this.$router.push({name:'add-goods',params:row})
       }
-    }
+    },
   }
 </script>

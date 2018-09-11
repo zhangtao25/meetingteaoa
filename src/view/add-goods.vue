@@ -83,6 +83,8 @@
     },
     data() {
       return {
+        isEdit:false,
+        id:"",
         largeclassOptions: [],
         smallclassOptions: [],
         ruleForm: {
@@ -101,8 +103,8 @@
               '2': '9'
             }
           },
-          price: '90',
-          no_discount_price: '100',
+          price: 90,
+          no_discount_price: 100,
           figure_img: this.dataInterface + ':8080/elfinder/files/image-test/masichun0.jpg'
         },
         rules: {
@@ -131,6 +133,23 @@
     },
     mounted(){
       this.initData()
+      let params = JSON.stringify(this.$route.params)
+      if (params == "{}"){
+
+      } else {
+
+        this.isEdit = true
+        this.id = this.$route.params._id
+
+        this.ruleForm.zh_title = this.$route.params.zh_title
+        this.ruleForm.zh_desc = this.$route.params.zh_desc
+        this.ruleForm.en_title = this.$route.params.en_title
+        this.ruleForm.en_desc = this.$route.params.en_desc
+        this.ruleForm.saleoff = JSON.parse(this.$route.params.saleoff)
+        this.ruleForm.price = this.$route.params.price
+        this.ruleForm.no_discount_price = this.$route.params.no_discount_price
+        this.ruleForm.figure_img = this.$route.params.figure_img
+      }
     },
     methods: {
       initData(){
@@ -138,19 +157,40 @@
       },
       submitForm(formName) {
         let _this = this
-        console.log(_this.dataInterface)
+        // console.log(_this.dataInterface)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            GoodsDbOperation.AddGoods(this.ruleForm,_this.dataInterface).then(res => {
-              if (res == 'ok'){
-                this.$message({
-                  message: '商品已入库',
-                  type: 'success'
-                });
-              }else {
-                this.$message.error('服务器错误！');
-              }
-            })
+            // add
+            if (!_this.isEdit){
+              GoodsDbOperation.AddGoods(this.ruleForm,_this.dataInterface).then(res => {
+                if (res == 'ok'){
+                  this.$message({
+                    message: '商品已入库',
+                    type: 'success'
+                  });
+                  setTimeout(()=>{
+                    _this.$router.push({name:'list-of-goods'})
+                  },1500)
+                }else {
+                  this.$message.error('服务器错误！');
+                }
+              })
+            } else {
+              // del
+              GoodsDbOperation.UpdateGoods(this.id,this.ruleForm,_this.dataInterface).then(res => {
+                if (res == 'ok'){
+                  this.$message({
+                    message: '商品已更新',
+                    type: 'success'
+                  });
+                  setTimeout(()=>{
+                    _this.$router.push({name:'list-of-goods'})
+                  },1500)
+                }else {
+                  this.$message.error('服务器错误！');
+                }
+              })
+            }
           } else {
             this.$message.error('表单校验未通过！');
             return false;

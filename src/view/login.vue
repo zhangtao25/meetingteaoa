@@ -1,0 +1,38 @@
+<style>
+  html,body{height: 100%;width: 100%}
+  #login{
+    height: 100%;width: 100%;
+    background-image: url("http://pic.netbian.com/uploads/allimg/170725/103840-150095032034c0.jpg");
+    background-size: cover
+  }
+  #login>.login-wrap{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;padding: 30px;width: 300px;
+    border-radius: 4px;
+    box-shadow: 0 2px 16px #333c4b, 0 0 1px #333c4b, 0 0 1px #333c4b;
+  }
+</style>
+<template>
+  <div id="login">
+    <div class="login-wrap">
+      <el-form style="width: 300px;text-align: center">
+        <p style="font-size: 24px;font-weight: 400;text-align: center;margin: 0px 0 14px 0">用户登录</p>
+        <el-input value="" style="margin: 14px 0 25px 0"></el-input>
+        <el-input value=""></el-input>
+        <el-button style="margin: 30px 0 14px 0;width: 150px;background-color: #409eff;color: white" @click="goHome">登录</el-button>
+      </el-form>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  methods:{
+    goHome(){
+      this.$router.push({path:'/home'})
+    }
+  }
+}
+</script>
