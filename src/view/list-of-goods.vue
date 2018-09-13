@@ -58,7 +58,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <edit-goods ref="editGoods"></edit-goods>
   </div>
 </template>
 
@@ -80,12 +79,8 @@
 <script>
   import GoodsDbOperation from './../service/goods-db-operation'
   import AllTypesOfTea from './../service/all-types-of-tea'
-  import EditGoods from './../view/edit-goods'
 
   export default {
-    components:{
-      'edit-goods': EditGoods
-    },
     data() {
       return {
         goodsData:[],
@@ -142,7 +137,6 @@
         })
       },
       handleEdit(index,row){
-        // console.log(row)
         this.$router.push({name:'add-goods',params:row})
       }
     },

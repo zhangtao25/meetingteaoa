@@ -58,7 +58,8 @@
                 select : function(event, elfinderInstance) {
                   _this.currentlySelectedFiles = event.data.selected
                 }
-              }
+              },
+              lang : 'zh_CN'
             },
             function(fm, extraObj) {
               fm.bind('init', function() {

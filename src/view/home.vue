@@ -5,12 +5,7 @@
   <div id="home">
     <el-container style="height: 100%;">
       <el-aside style="width: 236px;background-color: #343c4a">
-        <p style="height:60px;width:236px;
-                  background-color:#3a4556;
-                  color: rgb(191, 202, 217);
-                  font-size: 25px;
-                  line-height: 60px;
-                  text-align: center">MeetingTea</p>
+        <logo zoomVal="0.7" style="margin-top: 10px"></logo>
         <div style="display: flex;justify-content: space-between;align-items: center;padding: 0 5px 0 20px">
           <span style="color: #fff;line-height: 50px">meetingtea.top</span>
           <div style="background-color: #4cc1b2;width: 5px;height: 25px"></div>
@@ -80,22 +75,25 @@
 </template>
 
 <script>
+  import logo from './../view/logo'
   export default {
+    components:{
+      logo
+    },
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
       },
       handleSelect(key, keyPath){
-        console.log(key, keyPath);
         if(key == "4"){
           this.$router.push({name:"file-manager"})
         }else if (key == "1-1"){
           this.$router.push({name:"list-of-goods"})
         }else if (key == "2-2"){
           this.$router.push({name:"add-goods"})
+        }else {
+          alert("还未开发！")
         }
       }
     }

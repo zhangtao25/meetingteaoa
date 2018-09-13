@@ -20,8 +20,8 @@
     <div class="login-wrap">
       <el-form style="width: 300px;text-align: center">
         <p style="font-size: 24px;font-weight: 400;text-align: center;margin: 0px 0 14px 0">用户登录</p>
-        <el-input value="" style="margin: 14px 0 25px 0"></el-input>
-        <el-input value=""></el-input>
+        <el-input class="user_name" value="" style="margin: 14px 0 25px 0"></el-input>
+        <el-input class="user_password" type="password" value=""></el-input>
         <el-button style="margin: 30px 0 14px 0;width: 150px;background-color: #409eff;color: white" @click="goHome">登录</el-button>
       </el-form>
     </div>
@@ -29,6 +29,11 @@
 </template>
 <script>
 export default {
+  data(){
+    return{
+
+    }
+  },
   methods:{
     goHome(){
       this.$router.push({path:'/home'})

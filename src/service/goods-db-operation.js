@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function AddGoods(val,url) {
   return new Promise((resolve, reject) => {
-    axios.get(url + ":3030/addGoods",{params:val})
+    axios.get(url + ":3030/goods/addGoods",{params:val})
       .then(res => {
         if (res.data == 'ok'){
           resolve('ok')
@@ -18,7 +18,7 @@ function AddGoods(val,url) {
 
 function GetGoods(url) {
   return new Promise((resolve, reject) => {
-    axios.get(url + ":3030/getGoods")
+    axios.get(url + ":3030/goods/getGoods")
       .then(res => {
         resolve(res.data)
       })
@@ -30,7 +30,7 @@ function GetGoods(url) {
 
 function DelGoods(id,url) {
   return new Promise((resolve, reject) => {
-    axios.get(url + ":3030/delGoods",{params:id})
+    axios.get(url + ":3030/goods/delGoods",{params:id})
       .then(res => {
         resolve(res.data)
       })
@@ -41,9 +41,8 @@ function DelGoods(id,url) {
 }
 
 function UpdateGoods(id,val,url){
-  // console.log(id,val,url)
   return new Promise((resolve, reject) => {
-    axios.get(url + ":3030/updateGoods",{params:{id,val}})
+    axios.get(url + ":3030/goods/updateGoods",{params:{id,val}})
       .then(res => {
         if (res.data == 'ok'){
           resolve('ok')

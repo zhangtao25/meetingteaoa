@@ -1,14 +1,15 @@
 <style>
   .add-goods .saleoff>li{width: 300px;display: flex;justify-content: space-between;margin-bottom: 14px}
   .add-goods .saleoff>li .el-input-number{width: 140px}
+  .add-goods>.add-goods-form{width: 800px}
 </style>
 <template>
   <div class="add-goods">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="width: 800px">
+    <el-form :model="addGoodsForm" :rules="addGoodsRules" ref="addGoodsForm" label-width="100px" class="add-goods-form">
       <el-form-item label="选择分类：" prop="classification">
         <el-select
-          v-model="ruleForm.classification.largeclass" placeholder="请选择"
-          @change="handleChange(ruleForm.classification.largeclass)">
+          v-model="addGoodsForm.classification.largeclass" placeholder="请选择茶的大分类"
+          @change="handleChange(addGoodsForm.classification.largeclass)">
           <el-option
             v-for="item in largeclassOptions"
             :key="item.value"
@@ -16,7 +17,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-select v-model="ruleForm.classification.smallclass" placeholder="请选择">
+        <el-select v-model="addGoodsForm.classification.smallclass" placeholder="请选择茶的小分类">
           <el-option
             v-for="item in smallclassOptions"
             :key="item.value"
@@ -26,49 +27,48 @@
         </el-select>
       </el-form-item>
       <el-form-item label="中文标题：" prop="zh_title">
-        <el-input v-model="ruleForm.zh_title"></el-input>
+        <el-input v-model="addGoodsForm.zh_title" placeholder="请输入商品中文标题"></el-input>
       </el-form-item>
       <el-form-item label="中文描述：" prop="zh_desc">
-        <el-input v-model="ruleForm.zh_desc"></el-input>
+        <el-input v-model="addGoodsForm.zh_desc" placeholder="请输入商品中文描述"></el-input>
       </el-form-item>
       <el-form-item label="英文标题：" prop="en_title">
-        <el-input v-model="ruleForm.en_title"></el-input>
+        <el-input v-model="addGoodsForm.en_title" placeholder="Please enter the English title of the product"></el-input>
       </el-form-item>
       <el-form-item label="英文描述：" prop="en_desc">
-        <el-input v-model="ruleForm.en_desc"></el-input>
+        <el-input v-model="addGoodsForm.en_desc" placeholder="Please input English description of goods"></el-input>
       </el-form-item>
       <el-form-item label="折扣活动：" prop="saleoff">
         <ul class="saleoff">
           <li style="">
-            <el-radio v-model="ruleForm.saleoff.saleoff_type" label="1" border>立减{{ruleForm.saleoff.saleoff_value['1']}}元</el-radio>
-            <el-input-number v-model="ruleForm.saleoff.saleoff_value['1']" :step="1"></el-input-number>
+            <el-radio v-model="addGoodsForm.saleoff.saleoff_type" label="1" border>立减{{addGoodsForm.saleoff.saleoff_value['1']}}元</el-radio>
+            <el-input-number v-model="addGoodsForm.saleoff.saleoff_value['1']" :step="1"></el-input-number>
           </li>
           <li>
-            <el-radio v-model="ruleForm.saleoff.saleoff_type" label="2" border>享{{ruleForm.saleoff.saleoff_value['2']}}折</el-radio>
-            <el-input-number v-model="ruleForm.saleoff.saleoff_value['2']" :step="1"></el-input-number>
+            <el-radio v-model="addGoodsForm.saleoff.saleoff_type" label="2" border>享{{addGoodsForm.saleoff.saleoff_value['2']}}折</el-radio>
+            <el-input-number v-model="addGoodsForm.saleoff.saleoff_value['2']" :step="1"></el-input-number>
           </li>
           <li>
-            <el-radio v-model="ruleForm.saleoff.saleoff_type" label="3" border>新品</el-radio>
+            <el-radio v-model="addGoodsForm.saleoff.saleoff_type" label="3" border>新品</el-radio>
           </li>
         </ul>
       </el-form-item>
       <el-form-item label="折后价格：" prop="price">
-        <el-input-number v-model="ruleForm.price" :step="1"></el-input-number>
+        <el-input-number v-model="addGoodsForm.price" :step="1"></el-input-number>
       </el-form-item>
       <el-form-item label="价格：" prop="no_discount_price">
-        <!--<el-input v-model="ruleForm.no_discount_price"></el-input>-->
-        <el-input-number v-model="ruleForm.no_discount_price" :step="1"></el-input-number>
+        <el-input-number v-model="addGoodsForm.no_discount_price" :step="1"></el-input-number>
       </el-form-item>
       <el-form-item label="选择图片：" prop="figure_img">
-        <img :src="ruleForm.figure_img" alt="" width="200">
+        <img :src="addGoodsForm.figure_img" alt="" width="200">
         <div style="margin-bottom: 14px">
-          <span>路径：</span><el-input v-model="ruleForm.figure_img" style="width: 600px" disabled=""></el-input>
+          <span>路径：</span><el-input v-model="addGoodsForm.figure_img" style="width: 600px" disabled=""></el-input>
         </div>
         <select-image @change="selectImageChange"></select-image>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">确认添加</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('addGoodsForm')">确认添加</el-button>
+        <el-button @click="resetForm('addGoodsForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -87,29 +87,29 @@
         id:"",
         largeclassOptions: [],
         smallclassOptions: [],
-        ruleForm: {
+        addGoodsForm: {
           classification: {
             largeclass:'',
             smallclass:''
           },
-          zh_title: '西湖龙井',
-          zh_desc: '买茶叶送老婆',
-          en_title: 'Longjin',
-          en_desc: 'Buy tea and send your wife',
+          zh_title: '',
+          zh_desc: '',
+          en_title: '',
+          en_desc: '',
           saleoff: {
-            saleoff_type:'2',
+            saleoff_type:'3',
             saleoff_value:{
               '1': '50',
               '2': '9'
             }
           },
-          price: 90,
-          no_discount_price: 100,
+          price: 0,
+          no_discount_price: 0,
           figure_img: this.dataInterface + ':8080/elfinder/files/image-test/masichun0.jpg'
         },
-        rules: {
+        addGoodsRules: {
           classification: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
+            { required: true, message: '输入不能为空', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
                 if (value.smallclass == ""){
@@ -119,15 +119,15 @@
                 }
               }
             }],
-          zh_title: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          zh_desc: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          zh_saleoff: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          en_title: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          en_desc: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          en_saleoff: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          price: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          no_discount_price: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-          figure_img: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
+          zh_title: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          zh_desc: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          zh_saleoff: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          en_title: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          en_desc: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          en_saleoff: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          price: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          no_discount_price: [{ required: true, message: '输入不能为空', trigger: 'blur' }],
+          figure_img: [{ required: true, message: '图片不能为空', trigger: 'blur' }]
         }
       };
     },
@@ -135,20 +135,17 @@
       this.initData()
       let params = JSON.stringify(this.$route.params)
       if (params == "{}"){
-
       } else {
-
         this.isEdit = true
         this.id = this.$route.params._id
-
-        this.ruleForm.zh_title = this.$route.params.zh_title
-        this.ruleForm.zh_desc = this.$route.params.zh_desc
-        this.ruleForm.en_title = this.$route.params.en_title
-        this.ruleForm.en_desc = this.$route.params.en_desc
-        this.ruleForm.saleoff = JSON.parse(this.$route.params.saleoff)
-        this.ruleForm.price = this.$route.params.price
-        this.ruleForm.no_discount_price = this.$route.params.no_discount_price
-        this.ruleForm.figure_img = this.$route.params.figure_img
+        this.addGoodsForm.zh_title = this.$route.params.zh_title
+        this.addGoodsForm.zh_desc = this.$route.params.zh_desc
+        this.addGoodsForm.en_title = this.$route.params.en_title
+        this.addGoodsForm.en_desc = this.$route.params.en_desc
+        this.addGoodsForm.saleoff = JSON.parse(this.$route.params.saleoff)
+        this.addGoodsForm.price = this.$route.params.price
+        this.addGoodsForm.no_discount_price = this.$route.params.no_discount_price
+        this.addGoodsForm.figure_img = this.$route.params.figure_img
       }
     },
     methods: {
@@ -157,12 +154,11 @@
       },
       submitForm(formName) {
         let _this = this
-        // console.log(_this.dataInterface)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // add
             if (!_this.isEdit){
-              GoodsDbOperation.AddGoods(this.ruleForm,_this.dataInterface).then(res => {
+              GoodsDbOperation.AddGoods(this.addGoodsForm,_this.dataInterface).then(res => {
                 if (res == 'ok'){
                   this.$message({
                     message: '商品已入库',
@@ -177,7 +173,7 @@
               })
             } else {
               // del
-              GoodsDbOperation.UpdateGoods(this.id,this.ruleForm,_this.dataInterface).then(res => {
+              GoodsDbOperation.UpdateGoods(this.id,this.addGoodsForm,_this.dataInterface).then(res => {
                 if (res == 'ok'){
                   this.$message({
                     message: '商品已更新',
@@ -202,15 +198,14 @@
       },
       handleChange(val){
         let _this = this
-
         AllTypesOfTea.getSmallclass(val)
           .then(res=>{
             _this.smallclassOptions = res
-            _this.ruleForm.classification.smallclass = ""
+            _this.addGoodsForm.classification.smallclass = ""
           })
       },
       selectImageChange(val){
-        this.ruleForm.figure_img = val
+        this.addGoodsForm.figure_img = val
       }
     }
   }

@@ -23,7 +23,8 @@
               },
               getfile : function () {
               }
-            }
+            },
+            lang : 'zh_CN'
           },
           function(fm, extraObj) {
             fm.bind('init', function() {
