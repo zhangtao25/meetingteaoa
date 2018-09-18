@@ -109,30 +109,14 @@
       },
       handleClassification(val){
         val = JSON.parse(val)
-        let obj = {"largeclass":"","smallclass":""}
-        let largeclassArr = AllTypesOfTea.getLargeclass()
-        for(let i=0;i<largeclassArr.length;i++){
-          if (val.largeclass == largeclassArr[i].value){
-            obj.largeclass=largeclassArr[i].label
-          }
-        }
-        AllTypesOfTea.getSmallclass(val.largeclass).then(res => {
-          let smallclassArr = res
-          for(let i=0;i<smallclassArr.length;i++){
-            if (val.smallclass == smallclassArr[i].value){
-              obj.smallclass=smallclassArr[i].label
-              this.classificationContainer = obj.largeclass+obj.smallclass
-            }
-          }
-        })
+        AllTypesOfTea.transferenceClass(val).then(res => {this.classificationContainer = res})
       },
       handleDelete(index,row){
-        let _this = this
-        _this.fullscreenLoading = true;
-        GoodsDbOperation.DelGoods(row._id,_this.dataInterface).then(res => {
+        this.fullscreenLoading = true;
+        GoodsDbOperation.DelGoods(row._id,this.dataInterface).then(res => {
           if (res == "ok"){
-            _this.init();
-            _this.fullscreenLoading = false;
+            this.init();
+            this.fullscreenLoading = false;
           }
         })
       },

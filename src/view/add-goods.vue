@@ -61,13 +61,13 @@
       </el-form-item>
       <el-form-item label="选择图片：" prop="figure_img">
         <img :src="addGoodsForm.figure_img" alt="" width="200">
-        <div style="margin-bottom: 14px">
+        <div>
           <span>路径：</span><el-input v-model="addGoodsForm.figure_img" style="width: 600px" disabled=""></el-input>
         </div>
         <select-image @change="selectImageChange"></select-image>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('addGoodsForm')">确认添加</el-button>
+        <el-button type="primary" @click="submitForm('addGoodsForm')">{{submitBtn}}</el-button>
         <el-button @click="resetForm('addGoodsForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -77,6 +77,7 @@
   import AllTypesOfTea from './../service/all-types-of-tea'
   import SelectImage from './../view/select-image'
   import GoodsDbOperation from './../service/goods-db-operation'
+
   export default {
     components:{
       'select-image': SelectImage
@@ -148,6 +149,15 @@
         this.addGoodsForm.figure_img = this.$route.params.figure_img
       }
     },
+    computed:{
+      submitBtn(){
+        if (this.isEdit){
+          return "确认更新"
+        } else {
+          return "确认添加"
+        }
+      }
+    },
     methods: {
       initData(){
         this.largeclassOptions = AllTypesOfTea.getLargeclass()
@@ -197,11 +207,10 @@
         this.$refs[formName].resetFields();
       },
       handleChange(val){
-        let _this = this
         AllTypesOfTea.getSmallclass(val)
           .then(res=>{
-            _this.smallclassOptions = res
-            _this.addGoodsForm.classification.smallclass = ""
+            this.smallclassOptions = res
+            this.addGoodsForm.classification.smallclass = ""
           })
       },
       selectImageChange(val){
