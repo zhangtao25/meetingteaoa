@@ -2,7 +2,7 @@
   html,body{height: 100%;width: 100%}
   #login{
     height: 100%;width: 100%;
-    background-image: url("http://pic.netbian.com/uploads/allimg/170725/103840-150095032034c0.jpg");
+    background-image: url("./../assets/login_banner.jpg");
     background-size: cover
   }
   #login>.login-wrap{
@@ -18,25 +18,51 @@
 <template>
   <div id="login">
     <div class="login-wrap">
-      <el-form style="width: 300px;text-align: center">
-        <p style="font-size: 24px;font-weight: 400;text-align: center;margin: 0px 0 14px 0">用户登录</p>
-        <el-input class="user_name" value="" style="margin: 14px 0 25px 0"></el-input>
-        <el-input class="user_password" type="password" value=""></el-input>
-        <el-button style="margin: 30px 0 14px 0;width: 150px;background-color: #409eff;color: white" @click="goHome">登录</el-button>
+      <el-form
+        style="width: 300px;text-align: center">
+        <p
+          style="font-size: 24px;font-weight: 400;text-align: center;margin: 0px 0 14px 0">
+          用户登录</p>
+        <el-input
+          class="user_name"
+          style="margin: 14px 0 25px 0"
+          v-model="user_name">
+        </el-input>
+        <el-input
+          class="user_password"
+          type="password"
+          v-model="user_password">
+        </el-input>
+        <el-button
+          style="margin: 30px 0 14px 0;width: 150px;background-color: #409eff;color: white"
+          @click="goHome">登录</el-button>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+  import UserInfo from './../service/user-info'
 export default {
   data(){
     return{
-
+      user_name: '',
+      user_password: ''
     }
   },
   methods:{
     goHome(){
-      this.$router.push({path:'/home'})
+      let val = {user_name: this.user_name,user_password:this.user_password}
+      UserInfo.ValidateLogon(this.dataInterface,val)
+        .then(res => {
+          if (res == 'no'){
+            this.$message('账号密码错误')
+
+          }else {
+            // this.$router.push({path:'/home'})
+            console.log(res)
+          }
+        }
+      )
     }
   }
 }

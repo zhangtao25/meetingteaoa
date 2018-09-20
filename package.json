@@ -1,8 +1,8 @@
 {
-  "name": "meetingteaoa",
+  "name": "meetingtea-oa",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "zhangtao25 <zhangtao25@lenovo.com>",
+  "author": "zhangtao25 <18158899797@163.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

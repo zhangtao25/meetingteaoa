@@ -64,7 +64,18 @@
       </el-aside>
       <el-container>
         <el-header height="60px" style="background:#EFF2F7">
-
+          <el-dropdown style="float: right;margin-right: 20px;margin-top: 5px" @command="handleCommand">
+            <span class="user-operation" style="display: flex;align-items: center">
+              <img src="https://herozhou.github.io/vue-framework-wz/static/img/avatars/6.jpg" alt="" style="border-radius: 50%;margin-right: 10px">
+              <span>admin</span>
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="a">消息中心</el-dropdown-item>
+              <el-dropdown-item command="b" divided>设置</el-dropdown-item>
+              <el-dropdown-item command="sign_out">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </el-header>
         <el-main style="background:#fff">
           <router-view></router-view>
@@ -94,6 +105,13 @@
           this.$router.push({name:"add-goods"})
         }else {
           alert("还未开发！")
+        }
+      },
+      handleCommand(command) {
+
+        if (command == "sign_out"){
+          this.$router.push({path:"/login"})
+          this.$message('退出登录')
         }
       }
     }
